@@ -818,7 +818,7 @@ class Thread:
         return msg
 
     async def reply(
-        self, message: discord.Message, anonymous: bool = False, plain: bool = False
+        self, message: discord.Message, anonymous: bool = False, plain: bool = False, color: discord.Color = None
     ) -> typing.Tuple[typing.List[discord.Message], discord.Message]:
         """Returns List[user_dm_msg] and thread_channel_msg"""
         if not message.content and not message.attachments and not message.stickers:
@@ -843,6 +843,7 @@ class Thread:
                     from_mod=True,
                     anonymous=anonymous,
                     plain=plain,
+                    color=color,
                 )
             )
 
@@ -913,6 +914,7 @@ class Thread:
         plain: bool = False,
         persistent_note: bool = False,
         thread_creation: bool = False,
+        color: discord.Color = None,
     ) -> None:
         if not note and from_mod:
             self.bot.loop.create_task(self._restart_close_timer())  # Start or restart thread auto close
@@ -945,6 +947,7 @@ class Thread:
             avatar_url = author.display_avatar.url
 
         embed = discord.Embed(description=message.content)
+
         if self.bot.config["show_timestamp"]:
             embed.timestamp = message.created_at
 
@@ -1175,6 +1178,7 @@ class Thread:
                 msg = await destination.send(mentions, embed=embed)
 
         else:
+            embed.colour = color if color is not None else embed.colour
             msg = await destination.send(mentions, embed=embed)
 
         if additional_images:
