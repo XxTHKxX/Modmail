@@ -874,7 +874,7 @@ class Thread:
         else:
             # Send the same thing in the thread channel.
             msg = await self.send(
-                message, destination=self.channel, from_mod=True, anonymous=anonymous, plain=plain
+                message, destination=self.channel, from_mod=True, anonymous=anonymous, plain=plain, color=color
             )
 
             tasks.append(

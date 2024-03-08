@@ -439,10 +439,8 @@ class Modmail(commands.Cog):
 
         sent_emoji, _ = await self.bot.retrieve_emoji()
         await self.bot.add_reaction(ctx.message, sent_emoji)
-
-        if category.id == 1209899098657001553:
-            embed = discord.Embed(title="Ticket Moved", description=f"This ticket has been transferred to the Executive Team", color=discord.Color.red())
-            await ctx.message.channel.send(embed=embed)
+        embed = discord.Embed(title="Ticket Moved", description=f"This ticket has been transferred to the {split_args[0]} Team by {ctx.author.mention}", color=discord.Color.red())
+        await ctx.message.channel.send(embed=embed)
 
     async def send_scheduled_close_message(self, ctx, after, silent=False):
         human_delta = human_timedelta(after.dt)
